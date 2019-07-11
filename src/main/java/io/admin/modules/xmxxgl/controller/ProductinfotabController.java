@@ -1,10 +1,14 @@
 package io.admin.modules.xmxxgl.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
+import io.admin.common.base.AbstractController;
 import io.admin.common.utils.PageUtils;
 import io.admin.common.utils.R;
+import io.admin.modules.sys.entity.SysUserEntity;
 import io.admin.modules.xmxxgl.entity.ProductinfotabEntity;
 import io.admin.modules.xmxxgl.service.ProductinfotabService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
-
-
 /**
  * 产品信息表
  *
@@ -27,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-07-10 10:04:18
  */
 @RestController
-@RequestMapping("generator/productinfotab")
-public class ProductinfotabController {
+@RequestMapping("xmxxgl/productinfotab")
+public class ProductinfotabController extends AbstractController {
     @Autowired
     private ProductinfotabService productinfotabService;
 
@@ -36,8 +37,8 @@ public class ProductinfotabController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("generator:productinfotab:list")
-    public R list(@RequestParam Map<String, Object> params){
+    @RequiresPermissions("xmxxgl:productinfotab:list")
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = productinfotabService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -48,9 +49,9 @@ public class ProductinfotabController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("generator:productinfotab:info")
-    public R info(@PathVariable("id") String id){
-			ProductinfotabEntity productinfotab = productinfotabService.selectById(id);
+    @RequiresPermissions("xmxxgl:productinfotab:info")
+    public R info(@PathVariable("id") String id) {
+        ProductinfotabEntity productinfotab = productinfotabService.selectById(id);
 
         return R.ok().put("productinfotab", productinfotab);
     }
@@ -59,9 +60,17 @@ public class ProductinfotabController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("generator:productinfotab:save")
-    public R save(@RequestBody ProductinfotabEntity productinfotab){
-			productinfotabService.insert(productinfotab);
+    @RequiresPermissions("xmxxgl:productinfotab:save")
+    public R save(@RequestBody ProductinfotabEntity productinfotab) {
+//        String uuid = UUID.randomUUID().toString().replace("-","");
+//        productinfotab.setId(uuid);
+        SysUserEntity sysUserEntity = getUser();
+        productinfotab.setCreatedate(new Date());
+        productinfotab.setLastchange(new Date());
+        productinfotab.setDatacreatorId(sysUserEntity.getUserId().toString());
+        productinfotab.setDatacreatorName(sysUserEntity.getUsername());
+
+        productinfotabService.insert(productinfotab);
 
         return R.ok();
     }
@@ -70,9 +79,10 @@ public class ProductinfotabController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("generator:productinfotab:update")
-    public R update(@RequestBody ProductinfotabEntity productinfotab){
-			productinfotabService.updateById(productinfotab);
+    @RequiresPermissions("xmxxgl:productinfotab:update")
+    public R update(@RequestBody ProductinfotabEntity productinfotab) {
+        productinfotab.setLastchange(new Date());//更新修改时间
+        productinfotabService.updateById(productinfotab);
 
         return R.ok();
     }
@@ -81,9 +91,9 @@ public class ProductinfotabController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("generator:productinfotab:delete")
-    public R delete(@RequestBody String[] ids){
-			productinfotabService.deleteBatchIds(Arrays.asList(ids));
+    @RequiresPermissions("xmxxgl:productinfotab:delete")
+    public R delete(@RequestBody String[] ids) {
+        productinfotabService.deleteBatchIds(Arrays.asList(ids));
 
         return R.ok();
     }

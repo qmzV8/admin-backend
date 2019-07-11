@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-07-10 10:04:18
  */
 @RestController
-@RequestMapping("generator/transporttab")
+@RequestMapping("xmxxgl/transporttab")
 public class TransporttabController {
     @Autowired
     private TransporttabService transporttabService;
@@ -35,7 +35,7 @@ public class TransporttabController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("generator:transporttab:list")
+    @RequiresPermissions("xmxxgl:transporttab:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = transporttabService.queryPage(params);
 
@@ -47,7 +47,7 @@ public class TransporttabController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("generator:transporttab:info")
+    @RequiresPermissions("xmxxgl:transporttab:info")
     public R info(@PathVariable("id") Integer id){
 			TransporttabEntity transporttab = transporttabService.selectById(id);
 
@@ -58,7 +58,7 @@ public class TransporttabController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("generator:transporttab:save")
+    @RequiresPermissions("xmxxgl:transporttab:save")
     public R save(@RequestBody TransporttabEntity transporttab){
 			transporttabService.insert(transporttab);
 
@@ -69,7 +69,7 @@ public class TransporttabController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("generator:transporttab:update")
+    @RequiresPermissions("xmxxgl:transporttab:update")
     public R update(@RequestBody TransporttabEntity transporttab){
 			transporttabService.updateById(transporttab);
 
@@ -80,7 +80,7 @@ public class TransporttabController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("generator:transporttab:delete")
+    @RequiresPermissions("xmxxgl:transporttab:delete")
     public R delete(@RequestBody Integer[] ids){
 			transporttabService.deleteBatchIds(Arrays.asList(ids));
 

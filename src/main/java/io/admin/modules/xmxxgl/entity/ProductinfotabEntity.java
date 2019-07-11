@@ -2,6 +2,7 @@ package io.admin.modules.xmxxgl.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class ProductinfotabEntity implements Serializable {
 	/**
 	 * 序号，项目ID，sys_guid()
 	 */
-	@TableId
+	@TableId(value = "id",type = IdType.UUID)
 	private String id;
 	/**
 	 * 产品名称
@@ -29,7 +30,7 @@ public class ProductinfotabEntity implements Serializable {
 	/**
 	 * 产品描述
 	 */
-	private String productdescriprion;
+	private String productdescription;
 	/**
 	 * 产品规格
 	 */
@@ -86,14 +87,14 @@ public class ProductinfotabEntity implements Serializable {
 	/**
 	 * 设置：产品描述
 	 */
-	public void setProductdescriprion(String productdescriprion) {
-		this.productdescriprion = productdescriprion;
+	public void setProductdescription(String productdescription) {
+		this.productdescription = productdescription;
 	}
 	/**
 	 * 获取：产品描述
 	 */
-	public String getProductdescriprion() {
-		return productdescriprion;
+	public String getProductdescription() {
+		return productdescription;
 	}
 	/**
 	 * 设置：产品规格

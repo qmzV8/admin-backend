@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-07-10 10:04:18
  */
 @RestController
-@RequestMapping("generator/recyletab")
+@RequestMapping("xmxxgl/recyletab")
 public class RecyletabController {
     @Autowired
     private RecyletabService recyletabService;
@@ -36,7 +36,7 @@ public class RecyletabController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("generator:recyletab:list")
+    @RequiresPermissions("xmxxgl:recyletab:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = recyletabService.queryPage(params);
 
@@ -48,7 +48,7 @@ public class RecyletabController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("generator:recyletab:info")
+    @RequiresPermissions("xmxxgl:recyletab:info")
     public R info(@PathVariable("id") Integer id){
 			RecyletabEntity recyletab = recyletabService.selectById(id);
 
@@ -59,7 +59,7 @@ public class RecyletabController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("generator:recyletab:save")
+    @RequiresPermissions("xmxxgl:recyletab:save")
     public R save(@RequestBody RecyletabEntity recyletab){
 			recyletabService.insert(recyletab);
 
@@ -70,7 +70,7 @@ public class RecyletabController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("generator:recyletab:update")
+    @RequiresPermissions("xmxxgl:recyletab:update")
     public R update(@RequestBody RecyletabEntity recyletab){
 			recyletabService.updateById(recyletab);
 
@@ -81,7 +81,7 @@ public class RecyletabController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("generator:recyletab:delete")
+    @RequiresPermissions("xmxxgl:recyletab:delete")
     public R delete(@RequestBody Integer[] ids){
 			recyletabService.deleteBatchIds(Arrays.asList(ids));
 

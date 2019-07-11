@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-07-10 10:04:18
  */
 @RestController
-@RequestMapping("generator/manufacturetab")
+@RequestMapping("xmxxgl/manufacturetab")
 public class ManufacturetabController {
     @Autowired
     private ManufacturetabService manufacturetabService;
@@ -36,7 +36,7 @@ public class ManufacturetabController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("generator:manufacturetab:list")
+    @RequiresPermissions("xmxxgl:manufacturetab:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = manufacturetabService.queryPage(params);
 
@@ -48,7 +48,7 @@ public class ManufacturetabController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("generator:manufacturetab:info")
+    @RequiresPermissions("xmxxgl:manufacturetab:info")
     public R info(@PathVariable("id") Integer id){
 			ManufacturetabEntity manufacturetab = manufacturetabService.selectById(id);
 
@@ -59,7 +59,7 @@ public class ManufacturetabController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("generator:manufacturetab:save")
+    @RequiresPermissions("xmxxgl:manufacturetab:save")
     public R save(@RequestBody ManufacturetabEntity manufacturetab){
 			manufacturetabService.insert(manufacturetab);
 
@@ -70,7 +70,7 @@ public class ManufacturetabController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("generator:manufacturetab:update")
+    @RequiresPermissions("xmxxgl:manufacturetab:update")
     public R update(@RequestBody ManufacturetabEntity manufacturetab){
 			manufacturetabService.updateById(manufacturetab);
 
@@ -81,7 +81,7 @@ public class ManufacturetabController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("generator:manufacturetab:delete")
+    @RequiresPermissions("xmxxgl:manufacturetab:delete")
     public R delete(@RequestBody Integer[] ids){
 			manufacturetabService.deleteBatchIds(Arrays.asList(ids));
 
