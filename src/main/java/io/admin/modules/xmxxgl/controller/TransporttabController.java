@@ -1,10 +1,13 @@
 package io.admin.modules.xmxxgl.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import io.admin.common.base.AbstractController;
 import io.admin.common.utils.PageUtils;
 import io.admin.common.utils.R;
+import io.admin.modules.sys.entity.SysUserEntity;
 import io.admin.modules.xmxxgl.entity.TransporttabEntity;
 import io.admin.modules.xmxxgl.service.TransporttabService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
-
 /**
  * 运输、使用阶段数据采集表
  *
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("xmxxgl/transporttab")
-public class TransporttabController {
+public class TransporttabController extends AbstractController {
     @Autowired
     private TransporttabService transporttabService;
 
@@ -36,7 +37,7 @@ public class TransporttabController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("xmxxgl:transporttab:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = transporttabService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -48,8 +49,8 @@ public class TransporttabController {
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("xmxxgl:transporttab:info")
-    public R info(@PathVariable("id") Integer id){
-			TransporttabEntity transporttab = transporttabService.selectById(id);
+    public R info(@PathVariable("id") Integer id) {
+        TransporttabEntity transporttab = transporttabService.selectById(id);
 
         return R.ok().put("transporttab", transporttab);
     }
@@ -59,8 +60,15 @@ public class TransporttabController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("xmxxgl:transporttab:save")
-    public R save(@RequestBody TransporttabEntity transporttab){
-			transporttabService.insert(transporttab);
+    public R save(@RequestBody TransporttabEntity transporttab) {
+        SysUserEntity sysUserEntity = getUser();
+        transporttab.setCreatetime(new Date());
+        transporttab.setLastchange(new Date());
+        transporttab.setDatacreatorId(sysUserEntity.getUserId().toString());
+        transporttab.setDatacreatorName(sysUserEntity.getUsername());
+        transporttab.setDataownerId(sysUserEntity.getUserId().toString());
+        transporttab.setDataownerName(sysUserEntity.getUsername());
+        transporttabService.insert(transporttab);
 
         return R.ok();
     }
@@ -70,8 +78,8 @@ public class TransporttabController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("xmxxgl:transporttab:update")
-    public R update(@RequestBody TransporttabEntity transporttab){
-			transporttabService.updateById(transporttab);
+    public R update(@RequestBody TransporttabEntity transporttab) {
+        transporttabService.updateById(transporttab);
 
         return R.ok();
     }
@@ -81,8 +89,8 @@ public class TransporttabController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("xmxxgl:transporttab:delete")
-    public R delete(@RequestBody Integer[] ids){
-			transporttabService.deleteBatchIds(Arrays.asList(ids));
+    public R delete(@RequestBody Integer[] ids) {
+        transporttabService.deleteBatchIds(Arrays.asList(ids));
 
         return R.ok();
     }

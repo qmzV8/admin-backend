@@ -40,7 +40,7 @@ public class ProjectinfotabEntity implements Serializable {
 	 */
 	private String productname;
 	/**
-	 * 产品描述
+	 * 技术描述
 	 */
 	private String techdescriprion;
 	/**

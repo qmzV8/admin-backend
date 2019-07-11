@@ -1,10 +1,13 @@
 package io.admin.modules.xmxxgl.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import io.admin.common.base.AbstractController;
 import io.admin.common.utils.PageUtils;
 import io.admin.common.utils.R;
+import io.admin.modules.sys.entity.SysUserEntity;
 import io.admin.modules.xmxxgl.entity.RecyletabEntity;
 import io.admin.modules.xmxxgl.service.RecyletabService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("xmxxgl/recyletab")
-public class RecyletabController {
+public class RecyletabController extends AbstractController {
     @Autowired
     private RecyletabService recyletabService;
 
@@ -61,6 +64,13 @@ public class RecyletabController {
     @RequestMapping("/save")
     @RequiresPermissions("xmxxgl:recyletab:save")
     public R save(@RequestBody RecyletabEntity recyletab){
+        SysUserEntity sysUserEntity = getUser();
+        recyletab.setCreatetime(new Date());
+        recyletab.setLastchange(new Date());
+        recyletab.setDatacreatorId(sysUserEntity.getUserId().toString());
+        recyletab.setDatacreatorName(sysUserEntity.getUsername());
+        recyletab.setDataownerId(sysUserEntity.getUserId().toString());
+        recyletab.setDataownerName(sysUserEntity.getUsername());
 			recyletabService.insert(recyletab);
 
         return R.ok();
