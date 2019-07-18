@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.admin.modules.budget.contract.dao.BudgetMainContractDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.admin.modules.budget.contract.entity.BudgetMainContractEntity" id="budgetMainContractMap">
+        <result property="contractId" column="contract_id"/>
+        <result property="contractName" column="contract_name"/>
+        <result property="contractCategory" column="contract_category"/>
+        <result property="contactLocation" column="contact_location"/>
+        <result property="contractDeadline" column="contract_deadline"/>
+        <result property="contractQuota" column="contract_quota"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+</mapper>
